@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Flx Leave Management</title>
+    <style>
+        body{
+            background-color: cyan;
+        }
+        .head{
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        .but{
+            padding-top: 50px;
+            /* padding-bottom: 25px; */
+            padding-left: 15px;
+            padding-right: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+        #btn_g{
+            background-color: green;
+            color: black;
+        }
+        #btn_g:hover{
+            background-color: black;
+            color: green;
+        }
+        #btn_r{
+            background-color: red;
+            color: black;
+        }
+        #btn_r:hover{
+            background-color: black;
+            color: red;
+        }
+        #in1,#in2{
+            width: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <center>
+            <div class="head">
+                <h1>Welcome to Flx Leave Management System</h1>
+                <br><br>
+                <h4>
+                    here we are maintaing the leave request for students
+                </h4>
+                <h3>
+                    {{us.username}}
+                </h3>
+            </div>
+            <p>Click here to logout</p>
+            <form action="logout">
+                <center>
+                    <div>
+                        <button type="submit" id="btn" class="btn btn-primary btn-lg">Logout --></button>
+                    </div>
+                </center>
+            </form>
+            <br><br>
+            {%if mess %}
+            <div class="alert alert-success alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-exclamation-octagon-fill"></i>
+                <strong class="mx-2">Success!</strong>{{mess}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+            <!-- <h3>{{us.username}}</h3>
+            <h3>{{us.password}}</h3> -->
+        </center> 
+        {% for j in lev %}
+        {% if id == j.ref_id_id %}
+        {% if j.status == 'pending' %}
+        <div class="container">
+            <form action="accept" method="post">
+                {% csrf_token %}
+            <div class="row">
+                    <div class="col">
+                        <input type="number" id="in1" value={{j.id}} name="num" readonly>
+                      </div>
+                      <div class="col">
+                        <input type="number" id="in2" value={{j.rogno}} name="ro" readonly>
+                      </div>
+                      <div class="col">
+                        <h3>{{j.name}}</h3>
+                      </div>
+                      <div class="col">
+                        <h3>{{j.startdate}}</h3>
+                      </div>
+                      <div class="col">
+                        <h3>{{j.enddate}}</h3>
+                      </div>
+                      <div class="col">
+                        <h3>{{j.reason}}</h3>
+                      </div>
+                      <div class="col">
+                        <h3>{{j.reasontype}}</h3>
+                      </div>
+                      <div class="col">
+                        <select name="select">
+                            <option value="Accept">Accept</option>
+                            <option value="Reject">Reject</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                            <button type="submit" id="btn" class="btn btn-primary btn-lg">Submit</button>
+                      </div>
+                    </div>
+        </form>
+          </div>
+          <br>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>
